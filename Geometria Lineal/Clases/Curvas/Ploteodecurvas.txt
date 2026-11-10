@@ -1,0 +1,8 @@
+>> t=0:pi/50:10*pi;
+>> plot(sin(t),cos(t))
+>> plot(2*sin(t), 3*cos(t))
+>> plot(2*(2*cos(t)-cos(2*t)),2*(2*sin(t)-sin(2*t)))
+>> plot3(sin(t),cos(t),t)
+>> plot3(cos(2*t)-cos(3*t), sin(2*t)-sin(3*t), sin(t))
+>> plot(1+2*cos(t), tan(t)+2*sin(t))
+>> plot3(1+2*cos(t), tan(t)+2*sin(t), t)

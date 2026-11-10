@@ -1,0 +1,311 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+
+
+	\title{Teoria de las Superficies  \\ \large Primera y Segunda formas fundamentales,  Curvaturas y direcciones principales, Lineas de Curvatura} 		
+		\author{Por: David Duarte}
+	\date{\today}
+
+\begin{document}
+	
+
+	
+	\maketitle
+	
+	\section{Primera forma fundamental en geometría diferencial}
+	
+	La primera forma fundamental de una superficie se define como la métrica inducida en la superficie por la métrica euclidiana en el espacio ambiente. Se denota comúnmente como $ds^2$ y se calcula de la siguiente manera:
+	
+	$$ ds^2 = E du^2 + 2F du dv + G dv^2 $$
+	
+	Donde $E$, $F$ y $G$ son coeficientes que dependen de la parametrización de la superficie.
+	
+	\subsection{Ejemplo de cálculo de los parámetros E, F y G}
+	
+	Para determinar los coeficientes $E$, $F$ y $G$ de la primera forma fundamental para una superficie parametrizada por:
+	
+	$$ x(u,v) = u \cos(v), \quad y(u,v) = u \sin(v), \quad z(u,v) = v $$
+	
+	Primero calculamos las derivadas parciales de $x$, $y$ y $z$ con respecto a $u$ y $v$:
+	
+	$$ \frac{\partial x}{\partial u} = \cos(v), \quad \frac{\partial x}{\partial v} = -u \sin(v) $$
+	$$ \frac{\partial y}{\partial u} = \sin(v), \quad \frac{\partial y}{\partial v} = u \cos(v) $$
+	$$ \frac{\partial z}{\partial u} = 0, \quad \frac{\partial z}{\partial v} = 1 $$
+	
+	Utilizando estas derivadas, los coeficientes de la primera forma fundamental se calculan como:
+	
+	$$ E = 1 + \left( \frac{\partial x}{\partial u} \right)^2 + \left( \frac{\partial y}{\partial u} \right)^2 = 1 + \cos^2(v) + \sin^2(v) $$
+	$$ F = \frac{\partial x}{\partial u} \frac{\partial x}{\partial v} + \frac{\partial y}{\partial u} \frac{\partial y}{\partial v} = \cos(v) \sin(v) - u \sin(v) \cos(v) $$
+	$$ G = 1 + \left( \frac{\partial x}{\partial v} \right)^2 + \left( \frac{\partial y}{\partial v} \right)^2 = 1 + u^2 \sin^2(v) + u^2 \cos^2(v) $$
+	
+	Por lo tanto, los coeficientes $E$, $F$ y $G$ para esta superficie son:
+	
+	$$ E = 2, \quad F = 0, \quad G = 1 + u^2 $$
+	
+	\subsection{Longitud de arco}
+	
+	La longitud de un arco sobre una superficie se puede calcular utilizando la primera forma fundamental. La fórmula general para la longitud de un arco parametrizado por $u(t)$ y $v(t)$ es:
+	
+	$$ L = \int_{a}^{b} \sqrt{E(u(t),v(t)) \left( \frac{du}{dt} \right)^2 + 2F(u(t),v(t)) \frac{du}{dt} \frac{dv}{dt} + G(u(t),v(t)) \left( \frac{dv}{dt} \right)^2} dt $$
+	
+	\subsubsection{Ejemplo de cálculo de la longitud de arco en una Superficie Esférica}
+	
+	La longitud de arco en una esfera de radio 3 unidades centrada en el origen de coordenadas se puede calcular utilizando la primera forma fundamental. Supongamos que la esfera está parametrizada por:
+	
+	$$ x(u,v) = 3 \sin(u) \cos(v), \quad y(u,v) = 3 \sin(u) \sin(v), \quad z(u,v) = 3 \cos(u) $$
+	
+	Los coeficientes de la primera forma fundamental para esta superficie son:
+	
+	$$ E = 9, \quad F = 0, \quad G = 9 $$
+	
+	La longitud de arco sobre esta esfera se puede calcular mediante la integral:
+	
+	$$ L = \int_{a}^{b} \sqrt{E(u(t),v(t)) \left( \frac{du}{dt} \right)^2 + 2F(u(t),v(t)) \frac{du}{dt} \frac{dv}{dt} + G(u(t),v(t)) \left( \frac{dv}{dt} \right)^2} dt $$
+	
+	Para calcular la longitud de arco entre dos puntos en la esfera, se deben especificar las funciones $u(t)$ y $v(t)$ que describen la curva en la superficie. Luego se puede realizar la integral para obtener la longitud de arco.
+	
+	\subsection{Área de superficie}
+	
+	El área de una superficie parametrizada por $u$ y $v$ se puede calcular utilizando la primera forma fundamental de la siguiente manera:
+	
+	$$ A = \iint \sqrt{EG - F^2} \, du \, dv $$
+	
+	A continuación se muestra un ejemplo de cómo calcular la primera forma fundamental, la longitud de arco y el área de una superficie parametrizada por $u$ y $v$:
+	
+	Supongamos que tenemos una superficie parametrizada por:
+	
+	$$ x(u,v) = u \cos(v), \quad y(u,v) = u \sin(v), \quad z(u,v) = v $$
+	
+	Los coeficientes de la primera forma fundamental para esta superficie son:
+	
+	$$ E = 1 + (\frac{\partial x}{\partial u})^2 = 1 + \cos^2(v), \quad F = \frac{\partial x}{\partial u} \frac{\partial x}{\partial v} + \frac{\partial y}{\partial u} \frac{\partial y}{\partial v} = \cos(v) \sin(v), \quad G = 1 + (\frac{\partial y}{\partial v})^2 = 1 + \sin^2(v) $$
+	
+	La longitud de arco y el área de esta superficie se pueden calcular utilizando las fórmulas mencionadas anteriormente.
+	
+	\section{Segunda Forma Fundamental}
+	La segunda forma fundamental de una superficie parametrizada por $u$ y $v$ se define por los coeficientes:
+	
+	$$ L = E(v_v)^2 + 2Fv_uv_v + G(u_u)^2 $$
+	$$ M = E(v_u)^2 + 2Fv_uv_u + G(u_u)(v_u) $$
+	$$ N = E(u_u)^2 + 2Fv_uu_u + G(v_u)^2 $$
+	
+	Donde $E$, $F$ y $G$ son los coeficientes de la primera forma fundamental, y los subíndices indican las derivadas parciales respecto a los parámetros $u$ y $v$.
+	
+	\subsection{Ejemplo:}
+	Un ejemplo concreto de la segunda forma fundamental puede ser el cálculo de los coeficientes $L$, $M$ y $N$ para una esfera de radio $r$ parametrizada por:
+	
+	$$ x(u, v) = r \sin(u) \cos(v) $$
+	$$ y(u, v) = r \sin(u) \sin(v) $$
+	$$ z(u, v) = r \cos(u) $$
+	
+	Los coeficientes de la primera forma fundamental para esta parametrización son:
+	
+	$$ E = r^2 $$
+	$$ F = 0 $$
+	$$ G = r^2 \sin^2(u) $$
+	
+	Por lo tanto, los coeficientes de la segunda forma fundamental serían:
+	
+	$$ L = r^2 \sin^2(u) $$
+	$$ M = 0 $$
+	$$ N = r^2 $$
+	
+	
+	\subsection{Curvatura Normal}
+	
+	La curvatura normal a una superficie parametrizada se refiere a la curvatura de la superficie en la dirección normal a su plano tangente en un punto dado. Esta curvatura normal se puede caracterizar mediante la curvatura gaussiana y la curvatura media de la superficie.
+	
+	La curvatura gaussiana ($K$) en un punto de la superficie parametrizada se define como el producto de las curvaturas principales en ese punto. Para una superficie parametrizada por $x(u,v)$, $y(u,v)$ y $z(u,v)$, las curvaturas principales se calculan a partir de la segunda forma fundamental:
+	
+	$$ K = \frac{LN - M^2}{EG - F^2} $$
+	
+	Por otro lado, la curvatura media ($H$) en un punto de la superficie parametrizada se define como el promedio de las curvaturas principales en ese punto. Se calcula como:
+	
+	$$ H = \frac{1}{2}(L + N) $$
+	
+	\subsection{Curvaturas}
+	
+	\subsubsection{Principal y Direcciones}
+	
+	 En un punto de una superficie parametrizada por $x(u,v)$, $y(u,v)$ y $z(u,v)$, las curvaturas principales se refieren a las curvaturas en las direcciones de las curvas principales de la superficie en ese punto.
+	
+	\subsubsection{Curvatura Gaussiana y Curvatura media}
+	
+	La curvatura gaussiana ($K$) y la curvatura media ($H$) son dos medidas importantes de la curvatura en un punto de la superficie. La curvatura gaussiana se define como el producto de las curvaturas principales, mientras que la curvatura media es el promedio de las curvaturas principales.
+	
+	Las direcciones principales son las direcciones en las que las curvaturas principales son máximas y mínimas. Estas direcciones están asociadas a los autovectores de la matriz de la segunda forma fundamental de la superficie en ese punto.
+	
+	
+	Claro, aquí te proporciono una explicación más detallada sobre los conceptos de curvatura gaussiana y curvatura media, junto con ejemplos para ilustrarlos:
+	
+	\subsection*{Curvatura Gaussiana ($K$) y Curvatura Media ($H$)}
+	
+	La \textbf{curvatura gaussiana} ($K$) y la \textbf{curvatura media} ($H$) son dos medidas importantes de la curvatura en un punto de una superficie. Estas curvaturas se relacionan con las curvaturas principales de la superficie en ese punto.
+	
+	\begin{itemize}
+		\item La \textbf{curvatura gaussiana} se define como el producto de las curvaturas principales en un punto dado. Matemáticamente, se expresa como:
+		
+		$$ K = k_1 \cdot k_2 $$
+		
+		donde $k_1$ y $k_2$ son las curvaturas principales.
+		
+		\item La \textbf{curvatura media} se define como el promedio de las curvaturas principales en un punto dado. Matemáticamente, se expresa como:
+		
+		$$ H = \frac{1}{2}(k_1 + k_2) $$
+		
+		donde $k_1$ y $k_2$ son las curvaturas principales.
+	\end{itemize}
+	
+	
+	
+
+	
+	\subsubsection*{Ejemplo 1:}
+	Para una superficie parametrizada por $x(u,v) = \sin(u)$, $y(u,v) = \cos(v)$ y $z(u,v) = uv$, se desea encontrar la curvatura gaussiana y la curvatura media en el punto $(0, \pi/2, 0)$.
+	
+	
+	
+	
+	La curvatura gaussiana ($K$) y la curvatura media ($H$) en el punto $(0, \frac{\pi}{2}, 0)$ para la superficie parametrizada por $x(u, v) = \sin(u)$, $y(u, v) = \cos(v)$ y $z(u, v) = uv$, primero necesitamos calcular las curvaturas principales $k_1$ y $k_2$ en ese punto. Luego, podemos usar las fórmulas para $K$ y $H$.
+	
+	Las curvaturas principales $k_1$ y $k_2$ se pueden calcular utilizando la fórmula:
+	
+	\begin{align*}
+		k_1 & = \frac{LN - M^2 + \sqrt{(LN - M^2)^2 - (L + N)^2}}{2(L + N)} \\
+		k_2 & = \frac{LN - M^2 - \sqrt{(LN - M^2)^2 - (L + N)^2}}{2(L + N)}
+	\end{align*}
+	
+	Donde:
+	\begin{itemize}
+		\item $L = \frac{\partial^2 z}{\partial u^2}$
+		\item $M = \frac{\partial^2 z}{\partial u \partial v}$
+		\item $N = \frac{\partial^2 z}{\partial v^2}$
+	\end{itemize}
+	
+	Para el punto $(0, \frac{\pi}{2}, 0)$, las derivadas parciales son:
+	\begin{itemize}
+		\item $\frac{\partial z}{\partial u} = v = \frac{\pi}{2}$
+		\item $\frac{\partial z}{\partial v} = u = 0$
+		\item $\frac{\partial^2 z}{\partial u^2} = 0$
+		\item $\frac{\partial^2 z}{\partial u \partial v} = 1$
+		\item $\frac{\partial^2 z}{\partial v^2} = 0$
+	\end{itemize}
+	
+	Sustituyendo estos valores en las fórmulas de $k_1$ y $k_2$, podemos encontrar las curvaturas principales. Luego, calculamos $K = k_1 \cdot k_2$ y $H = \frac{1}{2}(k_1 + k_2)$.
+	
+	Ejemplo en código Python:
+	
+	\begin{lstlisting}[language=Python, caption={Código Python para calcular autovalores y autovectores}]
+	
+	import numpy as np
+	
+	# Definir las funciones para las derivadas parciales de z
+	def dz_du(u, v):
+	return v
+	
+	def dz_dv(u, v):
+	return u
+	
+	def d2z_du2(u, v):
+	return 0
+	
+	def d2z_dudv(u, v):
+	return 1
+	
+	def d2z_dv2(u, v):
+	return 0
+	
+	# Calcular las derivadas en el punto (0, pi/2, 0)
+	u = 0
+	v = np.pi/2
+	
+	L = d2z_du2(u, v)
+	M = d2z_dudv(u, v)
+	N = d2z_dv2(u, v)
+	
+	# Calcular las curvaturas principales
+	k1 = (L*N - M**2 + np.sqrt((L*N - M**2)**2 - (L + N)**2)) / (2*(L + N))
+	k2 = (L*N - M**2 - np.sqrt((L*N - M**2)**2 - (L + N)**2)) / (2*(L + N))
+	
+	# Calcular la curvatura gaussiana y la curvatura media
+	K = k1 * k2
+	H = 0.5 * (k1 + k2)
+	
+	print("Curvatura Gaussiana (K):", K)
+	print("Curvatura Media (H):", H)
+	
+	\end{lstlisting}
+	
+	
+	
+	
+	
+\subsubsection{Ejemplo 2:}
+
+Supongamos que tenemos la superficie parametrizada por $x(u,v) = u$, $y(u,v) = v$ y $z(u,v) = u^2 - v^2$. Queremos calcular las curvaturas principales y direcciones principales en el punto $(1,1,0)$ de esta superficie.
+
+Para ello, primero encontramos la matriz de la segunda forma fundamental en el punto $(1,1,0)$. Luego, diagonalizamos esta matriz para obtener las curvaturas principales y las direcciones principales en ese punto.
+
+Una vez obtenidas las curvaturas y direcciones principales, podemos analizar la geometría de la superficie en el punto $(1,1,0)$ y entender mejor su curvatura en diferentes direcciones.
+
+A continuación puedes observar el ejemplo en código Python:
+
+\begin{lstlisting}[language=Python, caption={Código Python para calcular autovalores y autovectores}]
+	import numpy as np
+	
+	# Definir la matriz
+	# de la segunda forma fundamental
+	# en el punto (1,1,0)
+		
+	A = np.array([[2, 0], [0, -2]])  
+	
+	# Calcular los autovalores
+	# y autovectores de la matriz A
+	eigenvalues, eigenvectors = np.linalg.eig(A)
+	
+	# Imprimir los autovalores
+	
+	print("Curvaturas principales:")
+	print(eigenvalues)
+	print("\nDirecciones principales:")
+	print(eigenvectors)
+\end{lstlisting}
+
+
+
+
+
+	
+	\section{Líneas Asintóticas y Familias Conjugadas de Curvas}
+	
+	Consideremos la superficie parametrizada por $x(u, v) = u\cos(v)$, $y(u, v) = u\sin(v)$ y $z(u, v) = u^2$.
+	
+	\subsection{Líneas Asintóticas}
+	
+	Para encontrar las líneas asintóticas, necesitamos determinar las curvas en la superficie que se comportan como asintotas locales. Esto se puede hacer calculando las derivadas parciales de la superficie y resolviendo la ecuación $\frac{\partial^2 z}{\partial u^2} du^2 + 2\frac{\partial^2 z}{\partial u \partial v} du dv + \frac{\partial^2 z}{\partial v^2} dv^2 = 0$, donde $\frac{\partial^2 z}{\partial u^2}$, $\frac{\partial^2 z}{\partial u \partial v}$ y $\frac{\partial^2 z}{\partial v^2}$ son las segundas derivadas parciales de la superficie.
+	
+	En nuestro caso, las segundas derivadas parciales son:
+	\begin{align*}
+		\frac{\partial^2 z}{\partial u^2} &= 2 \\
+		\frac{\partial^2 z}{\partial u \partial v} &= 0 \\
+		\frac{\partial^2 z}{\partial v^2} &= -u^2
+	\end{align*}
+	
+	Sustituyendo estos valores en la ecuación, obtenemos la ecuación diferencial para las líneas asintóticas.
+	
+	\subsection{Familias Conjugadas de Curvas}
+	
+	Las familias conjugadas de curvas en esta superficie se pueden encontrar determinando las curvas que se cortan ortogonalmente en cada punto. Esto implica resolver la ecuación $\frac{\partial^2 z}{\partial u^2} \frac{\partial^2 z}{\partial v^2} - \left(\frac{\partial^2 z}{\partial u \partial v}\right)^2 = 0$.
+	
+	En nuestro caso, esta ecuación se convierte en:
+	\begin{align*}
+		\frac{\partial^2 z}{\partial u^2} \frac{\partial^2 z}{\partial v^2} - \left(\frac{\partial^2 z}{\partial u \partial v}\right)^2 &= 2 \cdot (-u^2) - 0 = -2u^2
+	\end{align*}
+	
+	Por lo tanto, las familias conjugadas de curvas en esta superficie están determinadas por la ecuación $-2u^2 = 0$.
+	
+
+\end{document}

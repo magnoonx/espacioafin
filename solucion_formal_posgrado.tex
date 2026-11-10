@@ -1,0 +1,240 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{bm}
+
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{solbox}[1]{
+  colback=blue!5!white,
+  colframe=blue!65!black,
+  fonttitle=\bfseries,
+  title=#1,
+  arc=2mm,
+  breakable
+}
+
+\newtcolorbox{resumenbox}{
+  colback=green!5!white,
+  colframe=green!50!black,
+  fonttitle=\bfseries,
+  title=Resumen de Resultados,
+  arc=2mm
+}
+
+\title{\textbf{Geometría Lineal y Afín}\\ \large Resolución Formal: Planos Afines, Pertenencia y Sistemas de Coordenadas}
+\author{Curso de Postgrado en Matemáticas}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Planteamiento del Problema}
+
+En el espacio afín tridimensional real $\mathbb{A}^3(\mathbb{R})$, se consideran los siguientes puntos:
+\[
+P_0 = (1, 2, 0), \quad P_1 = (3, 2, 1), \quad P_2 = (0, 4, 1)
+\]
+
+\begin{enumerate}
+    \item Determine las ecuaciones paramétricas e implícitas del plano afín $\Pi$ que contiene a $\{P_0, P_1, P_2\}$.
+    \item Verifique si el punto $Q = (4, 4, 3)$ pertenece al plano afín $\Pi$.
+    \item En caso afirmativo, calcule las coordenadas afines de $Q$ respecto al marco afín $\{P_0; v_1, v_2\}$ y determine sus coordenadas baricéntricas con respecto al símplice de referencia $\{P_0, P_1, P_2\}$.
+\end{enumerate}
+
+\hrule
+\vspace{0.4cm}
+
+\section{Comprobación Preliminar: Independencia Afín}
+
+Recordemos que tres puntos $\{P_0, P_1, P_2\}$ en un espacio afín son afínmente independientes (no colineales) si y solo si los vectores directores con origen común:
+\[
+v_1 = \vec{P_0 P_1} = P_1 - P_0, \qquad v_2 = \vec{P_0 P_2} = P_2 - P_0
+\]
+son linealmente independientes en el espacio vectorial asociado $\mathbb{R}^3$.
+
+Calculamos las componentes:
+\begin{align*}
+    v_1 &= (3 - 1,\, 2 - 2,\, 1 - 0) = (2, 0, 1), \\
+    v_2 &= (0 - 1,\, 4 - 2,\, 1 - 0) = (-1, 2, 1).
+\end{align*}
+
+Analizando el rango de la matriz cuyas filas son $v_1$ y $v_2$:
+\[
+\operatorname{rg} \begin{pmatrix} 2 & 0 & 1 \\ -1 & 2 & 1 \end{pmatrix} = 2
+\]
+puesto que el menor principal de orden 2:
+\[
+\begin{vmatrix} 2 & 0 \\ -1 & 2 \end{vmatrix} = 4 \neq 0.
+\]
+Por lo tanto, $\{v_1, v_2\}$ es libre, lo cual demuestra que los puntos son afínmente independientes y determinan unívocamente un plano afín bidimensional $\Pi = P_0 + \langle v_1, v_2 \rangle$.
+
+\section{Ecuaciones del Plano Afín $\Pi$}
+
+\subsection{Ecuaciones Paramétricas}
+Un punto arbitrario $X = (x, y, z) \in \mathbb{A}^3(\mathbb{R})$ pertenece a $\Pi$ si y solo si existen escalares $\lambda, \mu \in \mathbb{R}$ tales que:
+\[
+X = P_0 + \lambda v_1 + \mu v_2
+\]
+Sustituyendo los valores conocidos:
+\[
+\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 1 \\ 2 \\ 0 \end{pmatrix} + \lambda \begin{pmatrix} 2 \\ 0 \\ 1 \end{pmatrix} + \mu \begin{pmatrix} -1 \\ 2 \\ 1 \end{pmatrix}
+\]
+
+Desglosando en componentes escalares obtenemos el sistema de ecuaciones paramétricas:
+\begin{solbox}{Ecuaciones Paramétricas de $\Pi$}
+\[
+\Pi:\ \begin{cases}
+x = 1 + 2\lambda - \mu \\
+y = 2 + 2\mu \\
+z = \lambda + \mu
+\end{cases} \quad (\lambda, \mu \in \mathbb{R})
+\]
+\end{solbox}
+
+\subsection{Ecuación Implícita (Cartesiana)}
+La condición $X \in \Pi$ equivale a que el vector $\vec{P_0 X} = (x-1, y-2, z)$ pertenezca al subespacio vectorial director $\vec{\Pi} = \langle v_1, v_2 \rangle$. En dimensión 3, esto equivale a la anulación del determinante formado por estos tres vectores:
+\[
+\det \begin{pmatrix}
+x - 1 & y - 2 & z \\
+2 & 0 & 1 \\
+-1 & 2 & 1
+\end{pmatrix} = 0
+\]
+
+Desarrollando por la primera fila:
+\[
+(x - 1) \begin{vmatrix} 0 & 1 \\ 2 & 1 \end{vmatrix} - (y - 2) \begin{vmatrix} 2 & 1 \\ -1 & 1 \end{vmatrix} + z \begin{vmatrix} 2 & 0 \\ -1 & 2 \end{vmatrix} = 0
+\]
+\[
+-2(x - 1) - 3(y - 2) + 4z = 0
+\]
+\[
+-2x + 2 - 3y + 6 + 4z = 0 \implies -2x - 3y + 4z + 8 = 0
+\]
+Multiplicando por $-1$:
+\begin{solbox}{Ecuación Implícita de $\Pi$}
+\[
+\Pi:\ 2x + 3y - 4z - 8 = 0
+\]
+\end{solbox}
+
+\section{Verificación de Pertenencia del Punto $Q = (4, 4, 3)$}
+
+Para determinar si $Q \in \Pi$, evaluamos directamente sus coordenadas en la ecuación implícita:
+\[
+2(4) + 3(4) - 4(3) - 8 = 8 + 12 - 12 - 8 = 20 - 20 = 0
+\]
+La ecuación se satisface de forma idéntica ($0 = 0$).
+
+\begin{solbox}{Conclusión de Pertenencia}
+El punto $Q = (4, 4, 3)$ satisface la ecuación implícita del plano, por lo tanto:
+\[
+\bm{Q \in \Pi} \quad \text{(Afirmativo)}
+\]
+\end{solbox}
+
+\section{Sistemas de Coordenadas de $Q$}
+
+\subsection{Coordenadas Afines respecto al marco afín $\mathcal{R} = \{P_0; v_1, v_2\}$}
+Por definición de coordenadas afines en $\Pi$, las coordenadas $(\alpha_1, \alpha_2)$ de $Q$ son los únicos coeficientes de la descomposición del vector $\vec{P_0 Q}$ en la base del subespacio director $\{v_1, v_2\}$:
+\[
+\vec{P_0 Q} = \alpha_1 v_1 + \alpha_2 v_2
+\]
+
+Calculamos el vector $\vec{P_0 Q}$:
+\[
+\vec{P_0 Q} = Q - P_0 = (4 - 1,\, 4 - 2,\, 3 - 0) = (3, 2, 3)
+\]
+
+Planteamos el sistema matricial:
+\[
+\alpha_1 \begin{pmatrix} 2 \\ 0 \\ 1 \end{pmatrix} + \alpha_2 \begin{pmatrix} -1 \\ 2 \\ 1 \end{pmatrix} = \begin{pmatrix} 3 \\ 2 \\ 3 \end{pmatrix} \iff \begin{cases}
+2\alpha_1 - \alpha_2 = 3 & (1) \\
+2\alpha_2 = 2 & (2) \\
+\alpha_1 + \alpha_2 = 3 & (3)
+\end{cases}
+\]
+
+De la ecuación (2):
+\[
+\alpha_2 = 1
+\]
+Sustituyendo $\alpha_2 = 1$ en la ecuación (3):
+\[
+\alpha_1 + 1 = 3 \implies \alpha_1 = 2
+\]
+Comprobamos en la ecuación (1):
+\[
+2(2) - (1) = 4 - 1 = 3 \quad \checkmark
+\]
+
+\begin{solbox}{Coordenadas Afines}
+Las coordenadas afines de $Q$ respecto al marco afín $\mathcal{R} = \{P_0; v_1, v_2\}$ son:
+\[
+[Q]_{\mathcal{R}} = (\alpha_1, \alpha_2) = \bm{(2, 1)}
+\]
+\end{solbox}
+
+\subsection{Coordenadas Baricéntricas respecto al símplice $\{P_0, P_1, P_2\}$}
+Dado el 2-símplice afín de referencia formado por los vértices $\{P_0, P_1, P_2\}$, las coordenadas baricéntricas normalizadas $(\lambda_0, \lambda_1, \lambda_2)$ se definen mediante:
+\[
+Q = \lambda_0 P_0 + \lambda_1 P_1 + \lambda_2 P_2, \quad \text{con} \quad \lambda_0 + \lambda_1 + \lambda_2 = 1
+\]
+
+Utilizando la relación con las coordenadas afines:
+\[
+Q = P_0 + \vec{P_0 Q} = P_0 + \alpha_1(P_1 - P_0) + \alpha_2(P_2 - P_0)
+\]
+\[
+Q = (1 - \alpha_1 - \alpha_2) P_0 + \alpha_1 P_1 + \alpha_2 P_2
+\]
+
+Igualando coeficientes:
+\begin{align*}
+    \lambda_1 &= \alpha_1 = 2 \\
+    \lambda_2 &= \alpha_2 = 1 \\
+    \lambda_0 &= 1 - \alpha_1 - \alpha_2 = 1 - 2 - 1 = -2
+\end{align*}
+
+Comprobación de la suma de pesos:
+\[
+\lambda_0 + \lambda_1 + \lambda_2 = -2 + 2 + 1 = 1 \quad \checkmark
+\]
+
+Comprobación directa de la combinación afín:
+\[
+-2(1, 2, 0) + 2(3, 2, 1) + 1(0, 4, 1) = (-2+6+0,\, -4+4+4,\, 0+2+1) = (4, 4, 3) = Q \quad \checkmark
+\]
+
+\begin{solbox}{Coordenadas Baricéntricas}
+Las coordenadas baricéntricas de $Q$ respecto al símplice $\{P_0, P_1, P_2\}$ son:
+\[
+(\lambda_0, \lambda_1, \lambda_2) = \bm{(-2, 2, 1)}
+\]
+\end{solbox}
+
+\paragraph{Interpretación geométrica:} Al ser $\lambda_0 = -2 < 0$, el punto $Q$ se encuentra en el exterior de la envolvente convexa del símplice (fuera del triángulo afín $\triangle P_0 P_1 P_2$), situado del lado opuesto de la recta afín soporte generada por $P_1$ y $P_2$.
+
+\vspace{0.4cm}
+
+\begin{resumenbox}
+\begin{itemize}
+    \item \textbf{Ecuaciones paramétricas:} $x = 1 + 2\lambda - \mu$, \quad $y = 2 + 2\mu$, \quad $z = \lambda + \mu$.
+    \item \textbf{Ecuación implícita:} $2x + 3y - 4z - 8 = 0$.
+    \item \textbf{Pertenencia:} $Q \in \Pi$ (Verdadero).
+    \item \textbf{Coordenadas afines en $\{P_0; v_1, v_2\}$:} $[Q] = (2, 1)$.
+    \item \textbf{Coordenadas baricéntricas en $\{P_0, P_1, P_2\}$:} $(\lambda_0, \lambda_1, \lambda_2) = (-2, 2, 1)$.
+\end{itemize}
+\end{resumenbox}
+
+\end{document}
+

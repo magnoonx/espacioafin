@@ -1,0 +1,198 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{fontspec}
+\usepackage[spanish, english, bidi=basic, provide=*]{babel}
+\babelprovide[import, main, onchar=ids fonts]{spanish}
+
+\babelfont{rm}{Noto Sans}
+\usepackage{enumitem}
+\setlist[itemize]{label=-}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{codebg}{rgb}{0.96, 0.96, 0.96}
+\definecolor{codeframe}{rgb}{0.85, 0.85, 0.85}
+\definecolor{codegray}{rgb}{0.45, 0.45, 0.45}
+
+\lstset{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{codeframe},
+  numbers=none,
+  showstringspaces=false,
+  keywordstyle=\textbf,
+  commentstyle=\color{codegray}
+}
+
+\title{\textbf{Guía Técnica de Configuración del Entorno de Computación Científica}\\ \large Maestría en Computación y Matemática --- Geometría Lineal}
+\author{David Duarte}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción y Requerimientos del Sistema}
+
+El curso de \textbf{Geometría Lineal y Computacional} exige el desarrollo de algoritmos numéricos, manipulaciones simbólicas y representaciones gráficas tridimensionales continuas y discretas. Para garantizar reproducibilidad en las evaluaciones y laboratorios computacionales, cada estudiante debe configurar un entorno de trabajo unificado basado en Python (y opcionalmente Julia), integrando librerías avanzadas de álgebra matricial, procesamiento de nubes de puntos y animación espacial.
+
+\subsection{Especificaciones Mínimas Recomendadas}
+\begin{itemize}
+    \item \textbf{Sistema Operativo:} GNU/Linux (Ubuntu 22.04 LTS o superior recomendado), macOS (Apple Silicon o Intel) o Windows 10/11 con \emph{Windows Subsystem for Linux 2 (WSL2)}.
+    \item \textbf{Memoria RAM:} 8 GB mínimo (16 GB recomendado para el cálculo de operadores sobre mallas densas).
+    \item \textbf{Procesador y Gráficos:} CPU multinúcleo x86\_64 o ARM64; tarjeta gráfica con soporte OpenGL 3.3 o superior (necesario para el renderizado interactivo en Open3D y Blender).
+\end{itemize}
+
+\section{Gestor de Entornos: Miniforge y Conda}
+
+Para evitar conflictos entre las librerías del sistema y paquetes compilados en C/C++ (como Open3D o SciPy), se utilizará \textbf{Miniforge} (distribución ligera de Conda enfocada en el canal comunitario \texttt{conda-forge}).
+
+\subsection{Paso 1: Instalación de Miniforge}
+Descargue e instale Miniforge según su sistema operativo:
+\begin{lstlisting}[language=bash]
+# En sistemas GNU/Linux y macOS:
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh
+\end{lstlisting}
+Siga las instrucciones en la terminal, acepte la licencia y autorice la inicialización de Conda (\texttt{conda init}). Reinicie su terminal al finalizar.
+
+\subsection{Paso 2: Creación del Entorno Virtual Dedicado}
+Se creará un entorno virtual aislado denominado \texttt{geomlineal} con Python 3.10 (versión con máxima compatibilidad entre Open3D, Trimesh y las APIs de Blender):
+\begin{lstlisting}[language=bash]
+conda create -n geomlineal python=3.10 -y
+conda activate geomlineal
+\end{lstlisting}
+
+\section{Instalación del Ecosistema de Computación Científica}
+
+\subsection{Paso 3: Núcleo Matemático y Servidor JupyterLab}
+Instale las herramientas fundamentales de álgebra lineal numérica, integración simbólica y el entorno de cuadernos interactivos:
+\begin{lstlisting}[language=bash]
+conda install -c conda-forge numpy scipy matplotlib sympy jupyterlab ipympl ipywidgets -y
+\end{lstlisting}
+\begin{itemize}
+    \item \textbf{NumPy y SciPy:} Computación matricial vectorizada, descomposición espectral, SVD e integración numérica de ecuaciones diferenciales ordinarias (\texttt{solve\_ivp}) para geodésicas.
+    \item \textbf{SymPy:} Deducción formal exacta de coeficientes métricos, curvaturas y tensores.
+    \item \textbf{ipympl:} Habilita rotación, zoom y visualización interactiva tridimensional dentro de las celdas de JupyterLab.
+\end{itemize}
+
+\subsection{Paso 4: Librerías de Geometría Computacional y Mallas 3D}
+Instale las librerías especializadas en nubes de puntos y geometría discreta:
+\begin{lstlisting}[language=bash]
+pip install open3d trimesh rtree shapely
+\end{lstlisting}
+\begin{itemize}
+    \item \textbf{Open3D:} Registro rígido por ICP (Iterative Closest Point), estimación de normales en superficies y reconstrucción por mínimos cuadrados móviles (MLS).
+    \item \textbf{Trimesh:} Estructuras de datos de semi-aristas (\emph{half-edge}), cálculo discreto del operador de Laplace-Beltrami, curvatura gaussiana y comprobación de cerradura topológica (\emph{watertight}).
+\end{itemize}
+
+\section{Configuración de Blender y su API en Python (\texttt{bpy})}
+
+Para la visualización cinemática de manipuladores robóticos y la renderización de variedades afines y campos vectoriales continuos, existen dos metodologías de integración con Blender:
+
+\subsection{Método A: Automatización Externa por Línea de Comandos (Recomendado)}
+Este método es el más estable y no altera el entorno virtual:
+\begin{enumerate}
+    \item Descargue e instale \textbf{Blender} (versión 3.6 LTS o 4.x) desde el sitio web oficial (\url{https://www.blender.org}).
+    \item Asegúrese de que el binario ejecutable esté en la variable de entorno \texttt{PATH}.
+    \item Ejecute cualquier script desarrollado en el curso en modo desatendido (\emph{background}) mediante el comando:
+\begin{lstlisting}[language=bash]
+blender --background --python script_afines.py
+\end{lstlisting}
+    \item Para inyectar paquetes como \texttt{scipy} o \texttt{trimesh} dentro del intérprete Python embebido de Blender, use la terminal:
+\begin{lstlisting}[language=bash]
+# En Linux (ajustar ruta segun instalacion):
+/opt/blender/4.2/python/bin/python3.11 -m pip install scipy trimesh
+\end{lstlisting}
+\end{enumerate}
+
+\subsection{Método B: Paquete \texttt{bpy} Independiente vía Pip}
+Si desea importar Blender directamente dentro de un script estándar de Python (\texttt{import bpy}), instale la compilación precompilada (requiere exactamente la versión de Python que demanda la compilación de la rueda):
+\begin{lstlisting}[language=bash]
+pip install bpy==4.0.0
+\end{lstlisting}
+
+\section{Entorno Julia (Opcional para Cálculo Diferencial de Alto Rendimiento)}
+
+Para estudiantes orientados al análisis tensorial simbólico-numérico y la resolución acelerada de geodésicas:
+
+\subsection{Paso 5: Instalación de Julia y Paquetes Esenciales}
+\begin{enumerate}
+    \item Instale Julia mediante el gestor oficial \texttt{juliaup}:
+\begin{lstlisting}[language=bash]
+curl -fsSL https://install.julialang.org | sh
+\end{lstlisting}
+    \item Abra el REPL de Julia y presione la tecla \texttt{]} para acceder al gestor de paquetes (\texttt{Pkg}):
+\begin{lstlisting}
+(@v1.10) pkg> activate @geomlineal
+(@geomlineal) pkg> add LinearAlgebra ForwardDiff DifferentialEquations Meshes IJulia
+\end{lstlisting}
+    \item Con \texttt{IJulia}, el kernel de Julia quedará automáticamente disponible dentro del mismo servidor JupyterLab configurado en Python.
+\end{enumerate}
+
+\section{Script de Verificación del Entorno}
+
+Para certificar que el sistema está completamente configurado y libre de errores antes de comenzar los laboratorios computacionales, cree un archivo llamado \texttt{verificar\_entorno.py} y ejecútelo en su terminal con el entorno activado:
+
+\begin{lstlisting}[language=python]
+import sys
+import numpy as np
+import scipy
+from scipy.linalg import svd
+import trimesh
+
+print(f"[OK] Python version: {sys.version.split()[0]}")
+print(f"[OK] NumPy version:  {np.__version__}")
+print(f"[OK] SciPy version:  {scipy.__version__}")
+print(f"[OK] Trimesh version:{trimesh.__version__}")
+
+# Prueba de Descomposicion en Valores Singulares (SVD)
+A = np.array([[2.0, 0.0, 1.0], [-1.0, 2.0, 1.0]])
+U, s, Vt = svd(A)
+assert np.allclose(A, U[:, :2] @ np.diag(s) @ Vt), "Error en SVD"
+print("[OK] Calculo matricial SVD validado correctamente.")
+
+# Prueba de Geometria Discreta
+caja = trimesh.creation.box(extents=[1.0, 1.0, 1.0])
+print(f"[OK] Malla de prueba generada: {len(caja.vertices)} vertices, "
+      f"{len(caja.faces)} caras. Cerrada: {caja.is_watertight}")
+
+# Prueba de Open3D
+try:
+    import open3d as o3d
+    print(f"[OK] Open3D version: {o3d.__version__}")
+except ImportError:
+    print("[ADVERTENCIA] Open3D no esta instalado o requiere drivers OpenGL.")
+
+# Prueba de Blender BPY
+try:
+    import bpy
+    print(f"[OK] Blender BPY disponible (Version {bpy.app.version_string})")
+except ImportError:
+    print("[INFO] BPY standalone no cargado. Se utilizara ejecucion externa.")
+
+print("\n>>> El entorno de computacion cientifica esta listo para su uso.")
+\end{lstlisting}
+
+Ejecución del test:
+\begin{lstlisting}[language=bash]
+python verificar_entorno.py
+\end{lstlisting}
+
+\section{Solución de Problemas Frecuentes (Troubleshooting)}
+
+\begin{itemize}
+    \item \textbf{Fallo de visualización en JupyterLab (\texttt{ipympl}):} Si los gráficos 3D no responden a la rotación del cursor, verifique haber incluido la directiva mágica \texttt{\%matplotlib widget} al inicio de su cuaderno.
+    \item \textbf{Errores de OpenGL en Linux / WSL2:} Si Open3D falla al abrir ventanas de visualización, ejecute:
+\begin{lstlisting}[language=bash]
+sudo apt-get install libgl1-mesa-glx libglib2.0-0
+\end{lstlisting}
+    \item \textbf{Conflictos con paquetes del sistema:} Asegúrese de no mezclar instalaciones globales de \texttt{sudo pip} con las del entorno Conda. Trabaje siempre bajo el prompt \texttt{(geomlineal)}.
+\end{itemize}
+
+\end{document}

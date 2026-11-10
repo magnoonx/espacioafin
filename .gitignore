@@ -1,0 +1,19 @@
+# Ignorar animaciones y videos pesados de Manim
+animations/
+media/
+
+# Ignorar cuadernos, tests y documentación interna
+notebooks/
+docs/
+tests/
+cli.py
+
+# Ignorar entornos virtuales y cachés de Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Ignorar archivos del sistema operativo
+.DS_Store
+Thumbs.db

@@ -1,0 +1,209 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{fontspec}
+
+% Configuración limpia de Babel para LuaLaTeX / XeLaTeX
+\usepackage[bidi=basic, provide=*]{babel}
+\babelprovide[import, main, onchar=ids fonts]{spanish}
+\babelprovide[import, onchar=ids fonts]{english}
+
+\babelfont{rm}{Noto Sans}
+
+% Microtipografía y tolerancia ante cajas ajustadas
+\usepackage{microtype}
+\emergencystretch=2.5em
+
+\usepackage{enumitem}
+\setlist[itemize]{label=-}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\title{\textbf{Programa de Posgrado: Geometría Lineal}\\ \large Curso de Estudios Dirigidos --- Maestría en Computación y Matemática}
+\author{David Duarte G.}
+\date{Modalidad 100\% Virtual (Moodle)}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section*{Ficha Técnica del Curso}
+	
+	\begin{center}
+		\begin{tabularx}{\textwidth}{lX}
+			\toprule
+			\textbf{Asignatura:} & Geometría Lineal \\
+			\textbf{Nivel:} & Maestría en Computación y Matemática \\
+			\textbf{Modalidad:} & 100\% en Línea (Plataforma Moodle) \\
+			\textbf{Régimen:} & Estudios Dirigidos \\
+			\textbf{Carácter:} & Teórico-Práctico / Computacional \\
+			
+			\bottomrule
+		\end{tabularx}
+	\end{center}
+	
+	\section{Fundamentación y Descripción General}
+	
+	La geometría moderna constituye el lenguaje formal indispensable para articular el análisis matemático riguroso con el diseño de algoritmos espaciales en computación visual, robótica móvil, procesamiento digital de geometrías y simulación física. Tradicionalmente, la geometría diferencial y el álgebra lineal se enseñan desde perspectivas analíticas abstractas desconectadas de sus retos numéricos.
+	
+	Este curso de posgrado en la modalidad de estudios dirigidos cubre desde la fundamentación axiomática de los espacios afines y euclidianos hasta la geometría diferencial de curvas y superficies en $\mathbb{R}^3$, integrando en cada unidad derivaciones simbólicas exactas con implementaciones vectorizadas reproducibles en Python y Julia. A través del entorno virtual Moodle, el estudiante interactúa con cuadernos interactivos, foros de discusión crítica sobre estabilidad numérica y talleres de revisión por pares.
+	
+	\section{Objetivos de Aprendizaje}
+	
+	\begin{itemize}
+		\item Formular algebraicamente las estructuras afines y euclidianas, diferenciando formalmente puntos de vectores libres y aplicando coordenadas baricéntricas en algoritmos de computación gráfica.
+		\item Describir cuantitativamente la geometría intrínseca y extrínseca de curvas espaciales mediante el triedro de Frenet-Serret, modelando trayectorias cinemáticas continuas para robots y maquinaria CNC.
+		\item Calcular y analizar la primera y segunda formas fundamentales de superficies regulares, vinculando las curvaturas principales, gaussiana y media con la segmentación de imágenes 3D y la deformación elástica de mallas.
+		\item Aplicar el análisis tensorial y el Teorema Egregium de Gauss a la solución de ecuaciones geodésicas en variedades bidimensionales y problemas de optimización sobre superficies curvas.
+	\end{itemize}
+	
+	\section{Unidades Temáticas Detalladas}
+	
+	\subsection{Unidad 1: Espacios Afines, Euclidianos y Álgebra Matricial Geométrica}
+	
+	\subsubsection*{Contenidos Analíticos}
+	\begin{itemize}
+		\item Estructura axiomática de espacio afín: acción transitiva y libre de un espacio vectorial sobre un conjunto de puntos. Regla de Chasles.
+		\item Coordenadas baricéntricas, combinaciones convexas y símplices afines.
+		\item Subespacios y variedades afines: rectas, planos e hiperplanos.
+		\item El grupo afín $\text{Aff}(n)$ e isometrías euclidianas.
+		\item Representación en coordenadas homogéneas y transformaciones matriciales por bloques.
+		\item Descomposición en Valores Singulares (SVD) orientada a transformaciones geométricas, rotaciones óptimas y el problema de Procrustes ortogonal.
+	\end{itemize}
+	
+	\subsubsection*{Aplicaciones Computacionales en el Mundo Real}
+	\begin{itemize}
+		\item \textbf{Robótica y Cinemática:} Encadenamiento de marcos afines locales mediante matrices de Denavit-Hartenberg para manipuladores seriales.
+		\item \textbf{Computación Gráfica:} Rasterización de triángulos mediante interpolación baricéntrica acelerada por GPU.
+		\item \textbf{Visión Artificial:} Estimación de matrices de transformación rígida y registro de nubes de puntos 3D (algoritmo Iterative Closest Point, ICP) resolviendo el problema de Procrustes vía SVD.
+	\end{itemize}
+	
+	\subsubsection*{Actividades y Evaluaciones en Moodle}
+	\begin{itemize}
+		\item \textbf{Foro Académico 1:} Discusión formal sobre la preservación de invariantes afines frente a isometrías euclidianas en visión por computadora.
+		\item \textbf{Laboratorio Computacional 1 (Jupyter Notebook):} Implementación desde cero de un registrador de nubes de puntos 3D mediante descomposición SVD.
+	\end{itemize}
+	
+	\subsection{Unidad 2: Teoría Diferencial de Curvas y Cinemática de Trayectorias}
+	
+	\subsubsection*{Contenidos Analíticos}
+	\begin{itemize}
+		\item Concepto de curva: representaciones paramétricas regulares, curvas de clase $C^m$, representaciones implícitas y proyecciones ortogonales.
+		\item Longitud de arco y parametrización natural por longitud de arco.
+		\item Geometría local: vector tangente unitario, recta tangente, curvatura ($\kappa$), vector unitario normal principal, plano osculador, vector binormal y torsión ($\tau$).
+		\item El triedro móvil y las Fórmulas de Frenet-Serret.
+		\item Teorema fundamental de existencia y unicidad de curvas en $\mathbb{R}^3$. Ecuaciones intrínsecas y representación canónica local.
+		\item Involutas, evolutas, teoría del contacto, circunferencias y curvas osculatrices.
+	\end{itemize}
+	
+	\subsubsection*{Aplicaciones Computacionales en el Mundo Real}
+	\begin{itemize}
+		\item \textbf{Planificación de Movimiento en Vehículos Autónomos:} Generación de trayectorias sin discontinuidades de aceleración lateral mediante clotoides (curvas de Euler) y B-splines de clase $C^2$.
+		\item \textbf{Mecanizado CNC e Impresión 3D:} Control dinámico del cabezal de corte en función de la curvatura local para minimizar vibraciones y desgaste mecánico.
+		\item \textbf{Diseño Mecánico Asistido por Computadora (CAD/CAM):} Perfiles de dientes de engranajes conjugados construidos mediante involutas de círculo.
+		\item \textbf{Cinematografía Virtual:} Interpolación de orientaciones de cámaras a lo largo de curvas con torsión controlada para prevenir inversiones bruscas de perspectiva (\emph{gimbal lock}).
+	\end{itemize}
+	
+	\subsubsection*{Actividades y Evaluaciones en Moodle}
+	\begin{itemize}
+		\item \textbf{Laboratorio Computacional 2 (Jupyter Notebook):} Generador e interpolador numérico del triedro de Frenet sobre trayectorias 3D con animación vectorial continua.
+		\item \textbf{Taller Moodle (Evaluación por Pares):} Deducción analítica y simulación computacional de la evoluta de curvas cónicas.
+	\end{itemize}
+	
+	\subsection{Unidad 3: Teoría Diferencial de Superficies y Análisis Tensorial}
+	
+	\subsubsection*{Contenidos Analíticos}
+	\begin{itemize}
+		\item Concepto de superficie: parametrizaciones regulares, cartas locales, superficies simples. Plano tangente y recta normal. Propiedades topológicas básicas.
+		\item Primera Forma Fundamental ($I$): tensor métrico, cálculo de longitud de arco sobre superficies, áreas y medidas angulares.
+		\item Segunda Forma Fundamental ($II$): curvatura normal, curvaturas principales ($\kappa_1, \kappa_2$) y direcciones principales.
+		\item Curvatura Gaussiana ($K = \kappa_1 \kappa_2$) y Curvatura Media ($H = \frac{\kappa_1 + \kappa_2}{2}$). Líneas de curvatura, líneas asintóticas y familias conjugadas de curvas.
+		\item Ecuaciones de Gauss-Weingarten, relaciones de compatibilidad de Codazzi-Mainardi y el \emph{Theorema Egregium} de Gauss.
+		\item Teorema fundamental de la teoría de superficies.
+		\item Introducción al análisis tensorial: tensores covariantes y contravariantes, álgebra tensorial y formulación tensorial de la curvatura.
+	\end{itemize}
+	
+	\subsubsection*{Aplicaciones Computacionales en el Mundo Real}
+	\begin{itemize}
+		\item \textbf{Imágenes Médicas y Biometría 3D:} Clasificación de patologías superficiales y segmentación de órganos a partir del mapa de signos de $K$ y $H$ (puntos elípticos, hiperbólicos, parabólicos y planos).
+		\item \textbf{Mapeo de Texturas y Despliegue UV:} Minimización de la distorsión métrica en mallas tridimensionales preservando la primera forma fundamental.
+		\item \textbf{Procesamiento Digital de Geometrías:} Algoritmos de suavizado mediante flujo de curvatura media (\emph{Mean Curvature Flow}) para filtrado de ruido en escaneos láser.
+		\item \textbf{Cálculo de Estructuras por Elementos Finitos (FEM):} Análisis de membranas delgadas y cáscaras arquitectónicas mediante tensores de esfuerzo y deformación métrica.
+	\end{itemize}
+	
+	\subsubsection*{Actividades y Evaluaciones en Moodle}
+	\begin{itemize}
+		\item \textbf{Laboratorio Computacional 3 (Jupyter Notebook):} Cálculo de las formas fundamentales y visualización del mapa térmico de curvatura gaussiana sobre archivos de mallas poligonales (.OBJ).
+		\item \textbf{Cuestionario Numérico Moodle (STACK):} Evaluación de cálculo simbólico y numérico de coeficientes métricos $E, F, G$ y $e, f, g$.
+	\end{itemize}
+	
+	\subsection{Unidad 4: Geometría Intrínseca, Geodésicas y Tópicos Avanzados}
+	
+	\subsubsection*{Contenidos Analíticos}
+	\begin{itemize}
+		\item Aplicaciones diferenciables entre superficies: isometrías locales y globales, aplicaciones conformes y equiareales.
+		\item Geometría intrínseca: conexión de Levi-Civita, derivada covariante y curvatura geodésica ($\kappa_g$).
+		\item Ecuaciones diferenciales de las líneas geodésicas. Coordenadas geodésicas polares y paralelas.
+		\item Superficies de curvatura gaussiana constante: esfera ($K > 0$), plano ($K = 0$) y pseudoesfera ($K < 0$).
+		\item Teorema global de Gauss-Bonnet y su vínculo con la característica de Euler-Poincaré ($\chi$).
+		\item Tópicos adicionales: curvas paralelas, superficies regladas y desarrollables, dinámica de partículas confinadas a superficies, y formulación de tubos envolventes en $\mathbb{R}^2$ y $\mathbb{R}^3$.
+	\end{itemize}
+	
+	\subsubsection*{Aplicaciones Computacionales en el Mundo Real}
+	\begin{itemize}
+		\item \textbf{Navegación de Drones y Rovers en Terrenos Irregulares:} Algoritmos de distancia mínima y trayectorias geodésicas numéricas sobre modelos digitales de elevación (\emph{Fast Marching Method}).
+		\item \textbf{Manufactura con Materiales Rígidos:} Construcción de paneles de fuselaje aeronáutico y patrones textiles restringidos por superficies desarrollables ($K = 0$).
+		\item \textbf{Modelado Vascular y Redes de Tuberías:} Generación algorítmica de conductos tubulares 3D a lo largo de trayectorias esqueléticas extraídas de angiotomografías.
+		\item \textbf{Auditoría Topológica de Mallas:} Aplicación del Teorema de Gauss-Bonnet discreto para verificar la validez de modelos cerrados para manufactura aditiva.
+	\end{itemize}
+	
+	\subsubsection*{Actividades y Evaluaciones en Moodle}
+	\begin{itemize}
+		\item \textbf{Laboratorio Computacional 4 (Jupyter Notebook):} Integración numérica del sistema de ecuaciones diferenciales no lineales de las geodésicas sobre superficies de revolución.
+		\item \textbf{Foro de Investigación Avanzada:} Revisión de artículos científicos de conferencias ACM SIGGRAPH o IEEE CVPR que aplican geodésicas en aprendizaje profundo geométrico (\emph{Geometric Deep Learning}).
+	\end{itemize}
+	
+	\section{Metodología de Enseñanza en Entorno Virtual (Moodle)}
+	
+	La dinámica del curso está organizada para el trabajo autónomo guiado y la colaboración académica rigurosa:
+	
+	\begin{itemize}
+		\item \textbf{Lecciones Interactivas y Lecturas Dirigidas:} Disponibilidad asincrónica de notas teóricas redactadas con soporte matemático MathJax y animaciones tridimensionales de apoyo.
+		\item \textbf{Laboratorios con Autoevaluación:} Cuadernos interactivos en Python provistos con pruebas unitarias para que el estudiante valide sus algoritmos antes de la entrega formal.
+		\item \textbf{Talleres de Coevaluación (Moodle Workshop):} Cada estudiante revisa de manera anónima y fundamentada las soluciones y el código de al menos dos pares.
+		\item \textbf{Seminarios Sincrónicos de Asesoría:} Sesiones quincenales por videoconferencia para despejar dudas complejas sobre deducciones analíticas y estabilidad computacional.
+	\end{itemize}
+	
+	\section{Esquema de Evaluación Continua}
+	
+	\begin{center}
+		\begin{tabularx}{\textwidth}{lXr}
+			\toprule
+			\textbf{Instrumento de Evaluación} & \textbf{Herramienta en Moodle} & \textbf{Ponderación} \\
+			\midrule
+			4 Laboratorios Computacionales & Módulo de Tareas (Jupyter Notebooks) & 35\% \\
+			2 Talleres de Coevaluación por Pares & Módulo Taller (Moodle Workshop) & 15\% \\
+			4 Pruebas Analítico-Simbólicas & Cuestionarios STACK / Formulas & 15\% \\
+			Participación en Foros Especializados & Foros de Discusión Académica & 10\% \\
+			Proyecto Final Integrador Aplicado & Entrega de Monografía y Defensa Oral & 25\% \\
+			\midrule
+			\textbf{Calificación Total} & & \textbf{100\%} \\
+			\bottomrule
+		\end{tabularx}
+	\end{center}
+	
+	\section{Proyecto Final Integrador (Líneas de Investigación)}
+	
+	El estudiante elegirá una línea de investigación aplicada para redactar una monografía de 6 a 8 páginas en formato estándar de artículo de investigación y defender sus resultados en sesión sincrónica:
+	
+	\begin{enumerate}
+		\item \textbf{Reconstrucción de Superficies por Mínimos Cuadrados Móviles (MLS):} Estimación local del plano tangente y curvaturas principales a partir de nubes de puntos con ruido sensorial.
+		\item \textbf{Planificación Geodésica de Robots Móviles:} Optimización de trayectorias sobre topografías irregulares minimizando la curvatura geodésica y el gasto energético.
+		\item \textbf{Generación de Curvas Suaves para Mecanizado en 5 Ejes:} Interpolación $C^2$ con control de torsión a partir de trayectorias discretas en código G.
+		\item \textbf{Análisis Geométrico y Topológico de Estructuras Anatómicas 3D:} Implementación del operador de Laplace-Beltrami y el teorema de Gauss-Bonnet sobre mallas biomédicas reales.
+	\end{enumerate}
+	
+
+	
+\end{document}
