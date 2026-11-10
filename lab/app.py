@@ -33,7 +33,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🏛️ Laboratorio Interactivo de Geometría de Posgrado")
+st.title("🏛️ Laboratorio Interactivo de Geometría Lineal Computacional")
 st.caption("Espacios Afines, Euclidianos y Teoría de las Curvas • Antigravity Ecosystem")
 
 tema_general = st.sidebar.radio(
