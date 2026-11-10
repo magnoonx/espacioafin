@@ -1,5 +1,5 @@
 """
-Laboratorio Interactivo de Geometría de Posgrado.
+Laboratorio Interactivo de Geometría Lineal.
 Cubre:
 - Parte I: Espacios Afines y Euclidianos (Módulos 1 al 5)
 - Parte II: Teoría de las Curvas (Módulos 6 al 8)
